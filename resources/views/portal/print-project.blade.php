@@ -55,7 +55,7 @@
         </div>
         <div>
             <div class="lbl">Status</div>
-            <div class="val">{{ $project->statusLabel }}</div>
+            <div class="val">{{ $project->status ?: 'Pending' }}</div>
         </div>
         <div>
             <div class="lbl">Start Date</div>

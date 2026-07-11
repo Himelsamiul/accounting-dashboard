@@ -6,12 +6,40 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $fillable = ['code', 'client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'description'];
+    protected $fillable = ['code', 'client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'status', 'description'];
 
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
     ];
+
+    /** Manual work-progress statuses an admin can set. */
+    public static function statuses(): array
+    {
+        return ['Pending', 'In Progress', 'On Hold', 'Completed', 'Cancelled'];
+    }
+
+    /** Admin badge class for the current status. */
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'Completed' => 'badge-success',
+            'In Progress' => 'badge-primary',
+            'On Hold' => 'badge-warning',
+            'Cancelled' => 'badge-danger',
+            default => 'badge-neutral',
+        };
+    }
+
+    /** Public portal pill class for the current status. */
+    public function statusPillClass(): string
+    {
+        return match ($this->status) {
+            'Completed' => 's-paid',
+            'In Progress', 'On Hold' => 's-progress',
+            default => 's-pending',
+        };
+    }
 
     /** Generate a unique, non-guessable tracking code. */
     public static function generateCode(): string

@@ -79,8 +79,7 @@
                         <h2>{{ $project->name }}</h2>
                         <div class="code">CODE: {{ $project->code }}</div>
                     </div>
-                    @php $sc = $project->statusLabel === 'Fully Paid' ? 's-paid' : ($project->statusLabel === 'In Progress' ? 's-progress' : 's-pending'); @endphp
-                    <span class="sbadge {{ $sc }}">{{ $project->statusLabel }}</span>
+                    <span class="sbadge {{ $project->statusPillClass() }}">{{ $project->status ?: 'Pending' }}</span>
                 </div>
                 <div class="rcard-body">
                     <div class="money-grid">
@@ -100,6 +99,7 @@
                 <div class="rcard-head"><h2 style="font-size:1.1rem;">Project Details</h2></div>
                 <div class="rcard-body">
                     <div class="detail-list">
+                        <div class="d"><div class="dt">Project Status</div><div class="dd"><span class="pill {{ $project->statusPillClass() }}">{{ $project->status ?: 'Pending' }}</span></div></div>
                         <div class="d"><div class="dt">Client</div><div class="dd">{{ $project->client->name ?? '—' }}</div></div>
                         <div class="d"><div class="dt">Type</div><div class="dd">{{ $project->type ?: '—' }}</div></div>
                         <div class="d"><div class="dt">Start Date</div><div class="dd">{{ $project->start_date ? $project->start_date->format('d M Y') : '—' }}</div></div>

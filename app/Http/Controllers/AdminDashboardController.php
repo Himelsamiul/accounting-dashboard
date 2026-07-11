@@ -132,7 +132,7 @@ class AdminDashboardController extends Controller
     public function storeProject(Request $request)
     {
         $project = Project::create(array_merge(
-            $request->only(['client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'description']),
+            $request->only(['client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'status', 'description']),
             ['code' => Project::generateCode()]
         ));
 
@@ -160,7 +160,7 @@ class AdminDashboardController extends Controller
 
     public function updateProject(Request $request, Project $project)
     {
-        $project->update($request->only(['client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'description']));
+        $project->update($request->only(['client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'status', 'description']));
         return redirect()->route('projects.index')->with('status', 'Project updated successfully.');
     }
 

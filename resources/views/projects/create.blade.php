@@ -51,6 +51,15 @@
                     <label>Estimated End Date</label>
                     <input class="input" type="date" name="end_date" value="{{ old('end_date') }}">
                 </div>
+                <div class="field">
+                    <label>Project Status</label>
+                    <select class="select" name="status">
+                        @foreach(\App\Models\Project::statuses() as $st)
+                            <option value="{{ $st }}" {{ old('status', 'Pending') === $st ? 'selected' : '' }}>{{ $st }}</option>
+                        @endforeach
+                    </select>
+                    <span class="hint">Shown to the client on the tracking page.</span>
+                </div>
                 <div class="field col-span">
                     <label>Description</label>
                     <textarea class="textarea" rows="4" name="description" placeholder="Project details and scope...">{{ old('description') }}</textarea>

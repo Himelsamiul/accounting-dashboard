@@ -56,7 +56,13 @@
                         </td>
                         <td>
                             <div class="row-actions" style="justify-content:flex-end;">
-                                <a href="{{ route('team.projects.show', $project->id) }}" class="btn btn-ghost" style="padding:6px 12px;">Manage</a>
+                                <a href="{{ route('team.projects.show', $project->id) }}" class="btn btn-ghost btn-sm">Manage</a>
+                                <a href="{{ route('team.projects.summary', $project->id) }}" target="_blank" class="act" title="Payment summary (print)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                                </a>
+                                <a href="{{ route('team.projects.summary.excel', $project->id) }}" class="act" title="Download Excel">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                </a>
                             </div>
                         </td>
                     </tr>

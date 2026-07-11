@@ -60,7 +60,10 @@
                         <td class="strong">
                             <div class="cell-name">
                                 <span class="cell-avatar" style="background:{{ $c }}">{{ strtoupper(mb_substr($project->name, 0, 1)) }}</span>
-                                {{ $project->name }}
+                                <div>
+                                    <div>{{ $project->name }}</div>
+                                    <span class="badge {{ $project->statusBadgeClass() }}" style="margin-top:3px;">{{ $project->status ?: 'Pending' }}</span>
+                                </div>
                             </div>
                         </td>
                         <td>{{ $project->client->name ?? '—' }}</td>

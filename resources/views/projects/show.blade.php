@@ -18,6 +18,7 @@
         <div class="sub">{{ $project->client->name ?? 'Unassigned client' }}</div>
     </div>
     <div class="header-actions">
+        <span class="badge {{ $project->statusBadgeClass() }}" style="align-self:center;">{{ $project->status ?: 'Pending' }}</span>
         <span class="badge {{ $statusBadge }}" style="align-self:center;">{{ $statusLabel }}</span>
         <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-ghost">Edit</a>
         <a href="{{ route('projects.index') }}" class="btn btn-ghost">Back to list</a>
@@ -35,7 +36,8 @@
             <div class="detail-row"><div class="dt">Project Value</div><div class="dd">৳{{ number_format($value, 2) }}</div></div>
             <div class="detail-row"><div class="dt">Start Date</div><div class="dd">{{ $project->start_date ? $project->start_date->format('d M Y') : '—' }}</div></div>
             <div class="detail-row"><div class="dt">Estimated End Date</div><div class="dd">{{ $project->end_date ? $project->end_date->format('d M Y') : '—' }}</div></div>
-            <div class="detail-row"><div class="dt">Status</div><div class="dd"><span class="badge {{ $statusBadge }}">{{ $statusLabel }}</span></div></div>
+            <div class="detail-row"><div class="dt">Project Status</div><div class="dd"><span class="badge {{ $project->statusBadgeClass() }}">{{ $project->status ?: 'Pending' }}</span></div></div>
+            <div class="detail-row"><div class="dt">Payment Status</div><div class="dd"><span class="badge {{ $statusBadge }}">{{ $statusLabel }}</span></div></div>
             <div class="detail-row"><div class="dt">Collected</div><div class="dd">৳{{ number_format($collected, 2) }}</div></div>
             <div class="detail-row"><div class="dt">Outstanding</div><div class="dd">৳{{ number_format($remaining, 2) }}</div></div>
             <div class="detail-row"><div class="dt">Invoices</div><div class="dd">{{ $project->invoices->count() }}</div></div>
