@@ -23,7 +23,12 @@
                 </div>
                 <div class="field">
                     <label>Project Type</label>
-                    <input class="input" type="text" name="type" value="{{ old('type') }}" placeholder="e.g. Software Project">
+                    <input class="input" type="text" name="type" value="{{ old('type') }}" placeholder="e.g. Software Project" list="projectTypes">
+                    <datalist id="projectTypes">
+                        @foreach(\App\Models\Setting::projectTypes() as $pt)
+                            <option value="{{ $pt }}"></option>
+                        @endforeach
+                    </datalist>
                 </div>
                 <div class="field">
                     <label>Client <span class="req">*</span></label>
@@ -36,7 +41,15 @@
                 </div>
                 <div class="field">
                     <label>Project Value (৳) <span class="req">*</span></label>
-                    <input class="input" type="number" step="0.01" name="project_value" value="{{ old('project_value') }}" placeholder="200000" required>
+                    <input class="input" type="number" step="0.01" name="project_value" value="{{ old('project_value', \App\Models\Setting::project()['default_project_value']) }}" placeholder="200000" required>
+                </div>
+                <div class="field">
+                    <label>Start Date</label>
+                    <input class="input" type="date" name="start_date" value="{{ old('start_date') }}">
+                </div>
+                <div class="field">
+                    <label>Estimated End Date</label>
+                    <input class="input" type="date" name="end_date" value="{{ old('end_date') }}">
                 </div>
                 <div class="field col-span">
                     <label>Description</label>

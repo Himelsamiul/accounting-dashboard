@@ -34,6 +34,8 @@ class AuthController extends Controller
                 ]);
             }
 
+            \App\Support\ActivityLogger::log('login', null, 'Logged in');
+
             return redirect()->intended($landing);
         }
 
@@ -49,6 +51,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // Log before the session is torn down so the acting user is still known.
+        \App\Support\ActivityLogger::log('logout', null, 'Logged out');
+
         Auth::logout();
 
         $request->session()->invalidate();

@@ -57,6 +57,14 @@
             <div class="lbl">Status</div>
             <div class="val">{{ $project->statusLabel }}</div>
         </div>
+        <div>
+            <div class="lbl">Start Date</div>
+            <div class="val">{{ $project->start_date ? $project->start_date->format('d M Y') : '—' }}</div>
+        </div>
+        <div>
+            <div class="lbl">Est. End Date</div>
+            <div class="val">{{ $project->end_date ? $project->end_date->format('d M Y') : '—' }}</div>
+        </div>
     </div>
 
     <div class="summary-row">

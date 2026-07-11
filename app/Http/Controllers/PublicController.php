@@ -49,6 +49,13 @@ class PublicController extends Controller
 
         ContactMessage::create($data);
 
+        \App\Models\AdminNotification::record('New contact message from ' . $data['name'], [
+            'type' => 'message',
+            'body' => \Illuminate\Support\Str::limit($data['message'], 90),
+            'url' => route('contacts.index'),
+            'icon' => 'mail',
+        ]);
+
         return back()->with('status', 'Thank you! Your message has been received. We will get back to you shortly.');
     }
 }

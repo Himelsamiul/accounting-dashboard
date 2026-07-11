@@ -195,4 +195,101 @@
         </div>
     </section>
 </div>
+
+{{-- Team payout mini-stats --}}
+@if(auth()->user()->canView('team'))
+<div class="stat-grid" style="grid-template-columns: repeat(3, 1fr); margin-top:18px;">
+    <div class="stat-card">
+        <div class="stat-top">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#4f46e5,#8b5cf6)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+        </div>
+        <div><div class="stat-value">{{ number_format($teamStats['members']) }}</div><div class="stat-label">Team Members</div></div>
+        <div class="stat-sub">{{ $teamStats['active'] }} active</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-top">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#16a34a,#14b8a6)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+        </div>
+        <div><div class="stat-value">৳{{ number_format($teamStats['paid_out'], 0) }}</div><div class="stat-label">Paid to Team</div></div>
+        <div class="stat-sub">Distributed across projects</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-top">
+            <div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 5h13a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h13"/></svg>
+            </div>
+        </div>
+        <div><div class="stat-value">৳{{ number_format(max(0, $stats['total_collection'] - $teamStats['paid_out']), 0) }}</div><div class="stat-label">Net Retained</div></div>
+        <div class="stat-sub">Collection minus team payouts</div>
+    </div>
+</div>
+@endif
+
+{{-- Recent invoices + Top clients --}}
+<div class="dash-grid" style="margin-top:18px;">
+    <section class="card">
+        <div class="card-header">
+            <div>
+                <h2>Recent invoices</h2>
+                <div class="sub">Latest billing activity</div>
+            </div>
+            <a href="{{ route('invoices.index') }}" class="btn btn-ghost btn-sm">View all</a>
+        </div>
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Invoice</th>
+                        <th>Client</th>
+                        <th>Status</th>
+                        <th style="text-align:right;">Paid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($recentInvoices as $inv)
+                        <tr>
+                            <td class="strong">{{ $inv->invoice_number }}</td>
+                            <td>{{ $inv->client->name ?? ($inv->project->name ?? '—') }}</td>
+                            <td>
+                                @php $sc = ['Paid' => 'badge-success', 'Partial' => 'badge-warning', 'Pending' => 'badge-danger']; @endphp
+                                <span class="badge {{ $sc[$inv->status] ?? 'badge-neutral' }}">{{ $inv->status }}</span>
+                            </td>
+                            <td style="text-align:right;" class="val-accent">৳{{ number_format((float) $inv->paid_amount, 0) }}</td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="4"><div class="empty-state" style="padding:28px;"><div>No invoices yet.</div></div></td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-header">
+            <h2>Top clients</h2>
+            <span class="badge badge-neutral">By value</span>
+        </div>
+        <div class="card-body">
+            @php $palette = ['#4f46e5','#0ea5e9','#8b5cf6','#ec4899','#16a34a']; @endphp
+            @forelse($topClients as $i => $client)
+                <div class="completed-item">
+                    <div style="display:flex; align-items:center; gap:11px;">
+                        <span class="cell-avatar" style="background:{{ $palette[$i % count($palette)] }}">{{ strtoupper(mb_substr($client->name, 0, 1)) }}</span>
+                        <div>
+                            <div class="ci-name">{{ $client->name }}</div>
+                            <div class="ci-sub">{{ $client->projects_count }} project{{ $client->projects_count === 1 ? '' : 's' }}</div>
+                        </div>
+                    </div>
+                    <div class="val-accent">৳{{ number_format((float) $client->total_value, 0) }}</div>
+                </div>
+            @empty
+                <div class="empty-state" style="padding:28px;"><div>No client data yet.</div></div>
+            @endforelse
+        </div>
+    </section>
+</div>
 @endsection

@@ -143,6 +143,60 @@
         .perm-matrix input[type="checkbox"] { width: 17px; height: 17px; cursor: pointer; accent-color: var(--primary); }
         .perm-matrix td, .perm-matrix th { white-space: nowrap; }
 
+        /* Header dropdowns (notifications + profile) */
+        .hdr-menu { position: relative; }
+        .bell-btn { position: relative; }
+        .bell-badge {
+            position: absolute; top: -5px; right: -5px; min-width: 18px; height: 18px; padding: 0 5px;
+            border-radius: 999px; background: var(--danger); color: #fff; font-size: 0.68rem; font-weight: 800;
+            display: grid; place-items: center; border: 2px solid var(--surface); line-height: 1;
+        }
+        .profile-btn { display: flex; align-items: center; gap: 9px; background: none; border: none; cursor: pointer; padding: 3px; border-radius: 999px; }
+        .profile-btn:hover { background: var(--surface-3); }
+        .profile-btn .caret { color: var(--muted); transition: transform .18s ease; }
+        .hdr-menu.open .profile-btn .caret { transform: rotate(180deg); }
+        .dropdown {
+            position: absolute; top: calc(100% + 10px); right: 0; width: 340px; max-width: calc(100vw - 32px);
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            box-shadow: 0 16px 44px rgba(0,0,0,0.22); z-index: 60; overflow: hidden;
+            opacity: 0; visibility: hidden; transform: translateY(-8px); transform-origin: top right;
+            transition: opacity .16s ease, transform .16s ease, visibility .16s;
+        }
+        .hdr-menu.open .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+        .dropdown-head h4 { font-size: 0.95rem; }
+        .dropdown-head .mark-read { background: none; border: none; color: var(--primary); font-family: inherit; font-size: 0.78rem; font-weight: 700; cursor: pointer; padding: 0; }
+        .dropdown-head .mark-read:hover { text-decoration: underline; }
+        .dd-scroll { max-height: 360px; overflow-y: auto; }
+        .dd-notif { display: flex; align-items: flex-start; gap: 11px; padding: 12px 16px; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); transition: background .12s; }
+        .dd-notif:last-child { border-bottom: none; }
+        .dd-notif:hover { background: var(--surface-2); }
+        .dd-notif.unread { background: var(--primary-soft); }
+        .dd-ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; }
+        .dd-ic svg { width: 17px; height: 17px; }
+        .dd-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+        .dd-txt .t { font-size: 0.85rem; font-weight: 600; line-height: 1.35; }
+        .dd-txt .b { font-size: 0.79rem; color: var(--text-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .dd-txt .tm { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+        .dd-empty { padding: 34px 20px; text-align: center; color: var(--muted); font-size: 0.86rem; }
+        .dd-empty svg { width: 34px; height: 34px; opacity: 0.4; margin-bottom: 8px; }
+        .dropdown-foot { padding: 11px 16px; border-top: 1px solid var(--border); text-align: center; }
+        .dropdown-foot a { color: var(--primary); font-size: 0.83rem; font-weight: 700; text-decoration: none; }
+        .dropdown-foot a:hover { text-decoration: underline; }
+        /* Profile dropdown */
+        .pd-head { display: flex; align-items: center; gap: 13px; padding: 16px; border-bottom: 1px solid var(--border); }
+        .pd-avatar { width: 48px; height: 48px; border-radius: 13px; background: linear-gradient(135deg, var(--primary), #8b5cf6); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 1.2rem; flex-shrink: 0; }
+        .pd-name { font-weight: 700; font-size: 0.95rem; }
+        .pd-role { font-size: 0.76rem; color: var(--primary); font-weight: 600; }
+        .pd-email { font-size: 0.78rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .pd-links { padding: 6px; }
+        .pd-link { display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: var(--radius-sm); color: var(--text-soft); text-decoration: none; font-size: 0.88rem; font-weight: 500; width: 100%; background: none; border: none; cursor: pointer; font-family: inherit; text-align: left; }
+        .pd-link svg { width: 17px; height: 17px; opacity: 0.8; }
+        .pd-link:hover { background: var(--surface-3); color: var(--text); }
+        .pd-link.danger { color: var(--danger); }
+        .pd-link.danger:hover { background: var(--danger-soft); }
+        .pd-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
         .content { padding: 26px; flex: 1; max-width: 1360px; width: 100%; margin: 0 auto; }
 
         /* Footer */
@@ -261,6 +315,14 @@
         .toast-danger svg { color: var(--danger); }
         .toast-close { background: none; border: none; color: var(--muted); font-size: 1.25rem; line-height: 1; cursor: pointer; padding: 0 2px; }
         .toast-close:hover { color: var(--text); }
+        /* Live notification popup (clickable) */
+        .toast-notif { text-decoration: none; color: var(--text); align-items: flex-start; cursor: pointer; border-left: 4px solid var(--primary); }
+        .toast-notif:hover { background: var(--surface-2); }
+        .toast-notif .tn-ic { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; }
+        .toast-notif .tn-ic svg { width: 17px; height: 17px; }
+        .toast-notif .tn-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+        .toast-notif .tn-t { font-weight: 700; font-size: 0.88rem; line-height: 1.35; }
+        .toast-notif .tn-b { font-size: 0.8rem; color: var(--text-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         /* Detail / show pages */
         .detail-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
@@ -410,7 +472,7 @@
                     Dashboard
                 </a>
             @endif
-            @if($u->canView('clients') || $u->canView('projects') || $u->canView('banks') || $u->canView('invoices') || $u->canView('fully_paid'))
+            @if($u->canView('clients') || $u->canView('projects') || $u->canView('team') || $u->canView('banks') || $u->canView('invoices') || $u->canView('fully_paid'))
                 <div class="nav-label">Management</div>
             @endif
             @if($u->canView('clients'))
@@ -423,6 +485,12 @@
                 <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'active' : '' }}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                     Projects
+                </a>
+            @endif
+            @if($u->canView('team'))
+                <a href="{{ route('team.members.index') }}" class="{{ request()->routeIs('team.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Team &amp; Projects
                 </a>
             @endif
             @if($u->canView('banks'))
@@ -443,7 +511,7 @@
                     Fully Paid
                 </a>
             @endif
-            @if($u->canView('customers') || $u->canView('reviews') || $u->canView('contacts') || $u->canView('users'))
+            @if($u->canView('customers') || $u->canView('reviews') || $u->canView('contacts') || $u->canView('code_requests') || $u->canView('users') || $u->canView('history'))
                 <div class="nav-admin">
                     <div class="nav-label">Administration</div>
                     @if($u->canView('customers'))
@@ -464,6 +532,12 @@
                         Messages
                     </a>
                     @endif
+                    @if($u->canView('code_requests'))
+                    <a href="{{ route('code-requests.index') }}" class="{{ request()->routeIs('code-requests.*') ? 'active' : '' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        Code Requests
+                    </a>
+                    @endif
                     @if($u->canView('users'))
                     <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active' : '' }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -472,6 +546,12 @@
                     <a href="{{ route('roles.index') }}" class="{{ request()->routeIs('roles.*') ? 'active' : '' }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/></svg>
                         Roles
+                    </a>
+                    @endif
+                    @if($u->canView('history'))
+                    <a href="{{ route('history.index') }}" class="{{ request()->routeIs('history.*') ? 'active' : '' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        History
                     </a>
                     @endif
                 </div>
@@ -488,25 +568,112 @@
                 </button>
                 <span class="topbar-title">@yield('title', 'Dashboard')</span>
             </div>
+            @php
+                $notifIconMap = function ($n) {
+                    $key = $n->icon ?: $n->type;
+                    return match ($key) {
+                        'user', 'customer' => ['#4f46e5', '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'],
+                        'star', 'review'   => ['#f59e0b', '<polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 9 8.5 12 2"/>'],
+                        'mail', 'message'  => ['#0ea5e9', '<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/>'],
+                        default            => ['#8b5cf6', '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>'],
+                    };
+                };
+                try {
+                    $recentNotifs = \App\Models\AdminNotification::latest()->take(8)->get();
+                    $unreadNotifs = \App\Models\AdminNotification::unread()->count();
+                    $maxNotifId = (int) ($recentNotifs->max('id') ?? 0);
+                } catch (\Throwable $e) {
+                    $recentNotifs = collect();
+                    $unreadNotifs = 0;
+                    $maxNotifId = 0;
+                }
+            @endphp
             <div class="topbar-right">
                 <span class="clock" id="clock">00:00:00</span>
                 <button class="icon-btn theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme">
                     <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                     <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 </button>
-                <div style="display:flex; align-items:center; gap:9px;">
-                    <div class="avatar">{{ strtoupper(mb_substr(auth()->user()->name ?? 'U', 0, 1)) }}</div>
-                    <div class="user-meta">
-                        <div class="user-name">{{ auth()->user()->name }}</div>
-                        <div class="user-role">{{ auth()->user()->isSuperAdmin() ? 'Super Admin' : (auth()->user()->role->name ?? 'No role') }}</div>
+
+                {{-- Notification bell --}}
+                <div class="hdr-menu" data-menu>
+                    <button class="icon-btn bell-btn" data-menu-toggle aria-label="Notifications" title="Notifications">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        @if($unreadNotifs > 0)<span class="bell-badge">{{ $unreadNotifs > 9 ? '9+' : $unreadNotifs }}</span>@endif
+                    </button>
+                    <div class="dropdown">
+                        <div class="dropdown-head">
+                            <h4>Notifications</h4>
+                            @if($unreadNotifs > 0)
+                            <form method="POST" action="{{ route('notifications.readAll') }}">@csrf
+                                <button class="mark-read" type="submit">Mark all read</button>
+                            </form>
+                            @endif
+                        </div>
+                        <div class="dd-scroll">
+                            @forelse($recentNotifs as $n)
+                                @php [$accent, $path] = $notifIconMap($n); @endphp
+                                <a href="{{ route('notifications.open', $n->id) }}" class="dd-notif {{ $n->is_read ? '' : 'unread' }}">
+                                    <span class="dd-ic" style="background:{{ $accent }}1a; color:{{ $accent }}">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{!! $path !!}</svg>
+                                    </span>
+                                    <span class="dd-txt">
+                                        <span class="t">{{ $n->title }}</span>
+                                        @if($n->body)<span class="b">{{ $n->body }}</span>@endif
+                                        <span class="tm">{{ $n->created_at->diffForHumans() }}</span>
+                                    </span>
+                                </a>
+                            @empty
+                                <div class="dd-empty">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                                    <div>No notifications yet.</div>
+                                </div>
+                            @endforelse
+                        </div>
+                        <div class="dropdown-foot">
+                            <a href="{{ route('notifications.index') }}">View all notifications</a>
+                        </div>
                     </div>
                 </div>
-                <form method="POST" action="{{ route('logout') }}">@csrf
-                    <button class="btn btn-ghost btn-sm" type="submit">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                        Logout
+
+                {{-- Profile --}}
+                <div class="hdr-menu" data-menu>
+                    <button class="profile-btn" data-menu-toggle aria-label="Profile menu">
+                        <div class="avatar">{{ strtoupper(mb_substr(auth()->user()->name ?? 'U', 0, 1)) }}</div>
+                        <div class="user-meta">
+                            <div class="user-name">{{ auth()->user()->name }}</div>
+                            <div class="user-role">{{ auth()->user()->isSuperAdmin() ? 'Super Admin' : (auth()->user()->role->name ?? 'No role') }}</div>
+                        </div>
+                        <svg class="caret" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
-                </form>
+                    <div class="dropdown" style="width:280px;">
+                        <div class="pd-head">
+                            <div class="pd-avatar">{{ strtoupper(mb_substr(auth()->user()->name ?? 'U', 0, 1)) }}</div>
+                            <div style="min-width:0;">
+                                <div class="pd-name">{{ auth()->user()->name }}</div>
+                                <div class="pd-role">{{ auth()->user()->isSuperAdmin() ? 'Super Admin' : (auth()->user()->role->name ?? 'No role') }}</div>
+                                <div class="pd-email">{{ auth()->user()->email }}</div>
+                            </div>
+                        </div>
+                        <div class="pd-links">
+                            <a class="pd-link" href="{{ route('settings.index') }}#profile">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                My Profile
+                            </a>
+                            <a class="pd-link" href="{{ route('settings.index') }}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                Settings
+                            </a>
+                            <div class="pd-divider"></div>
+                            <form method="POST" action="{{ route('logout') }}">@csrf
+                                <button class="pd-link danger" type="submit">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -563,6 +730,93 @@
         var el = document.getElementById('clock');
         function tick() { if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour12: false }); }
         tick(); setInterval(tick, 1000);
+    })();
+    // Header dropdown menus (notifications + profile) — click to toggle, click-outside/Esc to close.
+    (function () {
+        var menus = document.querySelectorAll('[data-menu]');
+        function closeAll(except) {
+            menus.forEach(function (m) { if (m !== except) m.classList.remove('open'); });
+        }
+        menus.forEach(function (menu) {
+            var toggle = menu.querySelector('[data-menu-toggle]');
+            if (!toggle) return;
+            toggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var isOpen = menu.classList.contains('open');
+                closeAll(menu);
+                menu.classList.toggle('open', !isOpen);
+            });
+            menu.querySelector('.dropdown').addEventListener('click', function (e) { e.stopPropagation(); });
+        });
+        document.addEventListener('click', function () { closeAll(null); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(null); });
+    })();
+    // Live notification popups — poll the feed and toast anything new (code requests, reviews, messages…).
+    (function () {
+        var feedUrl = @json(route('notifications.feed'));
+        var lastSeen = {{ $maxNotifId ?? 0 }};
+        var wrap = document.getElementById('toastWrap');
+        var bellBtn = document.querySelector('.bell-btn');
+
+        function iconFor(key) {
+            switch (key) {
+                case 'user': case 'customer': return ['#4f46e5', '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'];
+                case 'star': case 'review': return ['#f59e0b', '<polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 9 8.5 12 2"/>'];
+                case 'mail': case 'message': return ['#0ea5e9', '<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/>'];
+                default: return ['#8b5cf6', '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>'];
+            }
+        }
+        function escapeHtml(s) { var d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; }
+
+        function showToast(item) {
+            if (!wrap) return;
+            var ic = iconFor(item.icon);
+            var a = document.createElement('a');
+            a.href = item.url;
+            a.className = 'toast toast-notif';
+            a.setAttribute('data-toast', '');
+            a.innerHTML =
+                '<span class="tn-ic" style="background:' + ic[0] + '1a; color:' + ic[0] + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ic[1] + '</svg></span>' +
+                '<span class="tn-main"><span class="tn-t">' + escapeHtml(item.title) + '</span>' +
+                (item.body ? '<span class="tn-b">' + escapeHtml(item.body) + '</span>' : '') + '</span>' +
+                '<button class="toast-close" aria-label="Dismiss">&times;</button>';
+            a.querySelector('.toast-close').addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); a.remove(); });
+            wrap.appendChild(a);
+            setTimeout(function () {
+                a.style.opacity = '0'; a.style.transform = 'translateX(120%)';
+                setTimeout(function () { a.remove(); }, 350);
+            }, 9000);
+        }
+
+        function updateBadge(count) {
+            if (!bellBtn) return;
+            var badge = bellBtn.querySelector('.bell-badge');
+            if (count > 0) {
+                if (!badge) { badge = document.createElement('span'); badge.className = 'bell-badge'; bellBtn.appendChild(badge); }
+                badge.textContent = count > 9 ? '9+' : count;
+            } else if (badge) {
+                badge.remove();
+            }
+        }
+
+        function poll() {
+            if (document.hidden) return;
+            fetch(feedUrl, { headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' })
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (data) {
+                    if (!data) return;
+                    updateBadge(data.unread);
+                    var items = data.items || [];
+                    items.filter(function (it) { return it.id > lastSeen; })
+                        .sort(function (a, b) { return a.id - b.id; })
+                        .forEach(showToast);
+                    if (items.length) {
+                        lastSeen = Math.max.apply(null, items.map(function (it) { return it.id; }).concat([lastSeen]));
+                    }
+                })
+                .catch(function () {});
+        }
+        setInterval(poll, 25000);
     })();
     // Combined client-side search + status filtering per table.
     // input[data-search="#tbl"] and button[data-filter="#tbl" data-value="Paid"]

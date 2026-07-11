@@ -85,6 +85,7 @@ class User extends Authenticatable
             'dashboard' => 'dashboard',
             'clients' => 'clients.index',
             'projects' => 'projects.index',
+            'team' => 'team.members.index',
             'banks' => 'banks.index',
             'invoices' => 'invoices.index',
             'fully_paid' => 'fully-paid.index',

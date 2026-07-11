@@ -6,13 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $fillable = ['code', 'client_id', 'name', 'type', 'project_value', 'description'];
+    protected $fillable = ['code', 'client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'description'];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+    ];
 
     /** Generate a unique, non-guessable tracking code. */
     public static function generateCode(): string
     {
+        $prefix = Setting::get('project_code_prefix') ?: 'PRJ';
+        $prefix = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $prefix)) ?: 'PRJ';
+
         do {
-            $code = 'PRJ-' . strtoupper(\Illuminate\Support\Str::random(8));
+            $code = $prefix . '-' . strtoupper(\Illuminate\Support\Str::random(8));
         } while (static::where('code', $code)->exists());
 
         return $code;
@@ -26,5 +34,23 @@ class Project extends Model
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function teamMembers()
+    {
+        return $this->belongsToMany(TeamMember::class, 'project_team_member')->withTimestamps();
+    }
+
+    public function teamPayments()
+    {
+        return $this->hasMany(TeamPayment::class);
+    }
+
+    /** Equal split: each assigned member's share of the project value. */
+    public function memberShare(): float
+    {
+        $count = $this->teamMembers->count();
+
+        return $count > 0 ? round(((float) $this->project_value) / $count, 2) : 0.0;
     }
 }

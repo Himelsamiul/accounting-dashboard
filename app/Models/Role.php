@@ -24,13 +24,17 @@ class Role extends Model
             'dashboard' => 'Dashboard',
             'clients' => 'Clients',
             'projects' => 'Projects',
+            'team' => 'Team & Projects',
             'banks' => 'Banks',
             'invoices' => 'Invoices',
             'fully_paid' => 'Fully Paid',
             'customers' => 'Portal Customers',
             'reviews' => 'Reviews',
             'contacts' => 'Contact Messages',
+            'code_requests' => 'Code Requests',
             'users' => 'Users & Roles',
+            'history' => 'History (Activity Log)',
+            'settings' => 'Settings',
         ];
     }
 
@@ -44,8 +48,11 @@ class Role extends Model
     {
         return match ($module) {
             'dashboard', 'fully_paid' => ['view'],
+            'settings' => ['view', 'edit'],
             'customers', 'reviews' => ['view', 'edit', 'delete'],
             'contacts' => ['view', 'delete'],
+            'code_requests' => ['view', 'edit', 'delete'],
+            'history' => ['view', 'delete'],
             default => self::actions(),
         };
     }

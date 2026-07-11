@@ -37,6 +37,13 @@ class PortalController extends Controller
             ]
         );
 
+        \App\Models\AdminNotification::record('New ' . $data['rating'] . '★ review from ' . $customer->name, [
+            'type' => 'review',
+            'body' => \Illuminate\Support\Str::limit($data['comment'], 90),
+            'url' => route('reviews.index'),
+            'icon' => 'star',
+        ]);
+
         return redirect()->route('public.home')->with('status', 'Thank you for your review!');
     }
 
@@ -62,6 +69,38 @@ class PortalController extends Controller
             'searched' => $searched,
             'code' => $code,
         ]);
+    }
+
+    /** Form where a logged-in client asks admin to resend their tracking code(s). */
+    public function showRequestCode()
+    {
+        return view('portal.request-code');
+    }
+
+    public function submitRequestCode(Request $request)
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email', 'max:160'],
+            'note' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $customer = Auth::guard('customer')->user();
+
+        \App\Models\CodeRequest::create([
+            'email' => $data['email'],
+            'customer_id' => $customer?->id,
+            'note' => $data['note'] ?? null,
+            'status' => 'pending',
+        ]);
+
+        \App\Models\AdminNotification::record('Tracking code resend requested', [
+            'type' => 'message',
+            'body' => 'For ' . $data['email'] . ($customer ? ' · by ' . $customer->name : ''),
+            'url' => route('code-requests.index'),
+            'icon' => 'mail',
+        ]);
+
+        return back()->with('status', 'Your request has been sent. Our team will email your tracking code shortly.');
     }
 
     public function printProject(string $code)

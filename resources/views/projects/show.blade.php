@@ -33,6 +33,8 @@
             <div class="detail-row"><div class="dt">Client</div><div class="dd">{{ $project->client->name ?? '—' }}</div></div>
             <div class="detail-row"><div class="dt">Type</div><div class="dd">{{ $project->type ?: '—' }}</div></div>
             <div class="detail-row"><div class="dt">Project Value</div><div class="dd">৳{{ number_format($value, 2) }}</div></div>
+            <div class="detail-row"><div class="dt">Start Date</div><div class="dd">{{ $project->start_date ? $project->start_date->format('d M Y') : '—' }}</div></div>
+            <div class="detail-row"><div class="dt">Estimated End Date</div><div class="dd">{{ $project->end_date ? $project->end_date->format('d M Y') : '—' }}</div></div>
             <div class="detail-row"><div class="dt">Status</div><div class="dd"><span class="badge {{ $statusBadge }}">{{ $statusLabel }}</span></div></div>
             <div class="detail-row"><div class="dt">Collected</div><div class="dd">৳{{ number_format($collected, 2) }}</div></div>
             <div class="detail-row"><div class="dt">Outstanding</div><div class="dd">৳{{ number_format($remaining, 2) }}</div></div>

@@ -33,6 +33,13 @@ class CustomerAuthController extends Controller
             'status' => 'active',
         ]);
 
+        \App\Models\AdminNotification::record('New portal customer registered: ' . $customer->name, [
+            'type' => 'customer',
+            'body' => $customer->email,
+            'url' => route('customers.index'),
+            'icon' => 'user',
+        ]);
+
         $this->sendOtp($customer);
         session(['otp_customer_id' => $customer->id]);
 

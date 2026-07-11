@@ -39,6 +39,7 @@
                     <th>Project</th>
                     <th>Client</th>
                     <th style="text-align:right;">Value</th>
+                    <th>Timeline</th>
                     <th>Collection</th>
                     <th>Status</th>
                     <th style="text-align:right;">Actions</th>
@@ -64,6 +65,14 @@
                         </td>
                         <td>{{ $project->client->name ?? '—' }}</td>
                         <td style="text-align:right;" class="val-accent">৳{{ number_format($value, 2) }}</td>
+                        <td>
+                            @if($project->start_date || $project->end_date)
+                                <div style="font-size:0.82rem; color:var(--text-soft);">{{ $project->start_date ? $project->start_date->format('d M Y') : '—' }}</div>
+                                <div class="progress-meta">to {{ $project->end_date ? $project->end_date->format('d M Y') : '—' }}</div>
+                            @else
+                                <span class="progress-meta">—</span>
+                            @endif
+                        </td>
                         <td>
                             <div class="progress-cell">
                                 <div class="bar-progress {{ $done ? 'done' : '' }}"><span style="width:{{ $pct }}%"></span></div>
@@ -100,14 +109,14 @@
                         </td>
                     </tr>
                 @empty
-                    <tr data-empty><td colspan="6">
+                    <tr data-empty><td colspan="7">
                         <div class="empty-state">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                             <div>No projects yet. Create your first project.</div>
                         </div>
                     </td></tr>
                 @endforelse
-                <tr class="no-results" style="display:none;"><td colspan="6">No projects match your search.</td></tr>
+                <tr class="no-results" style="display:none;"><td colspan="7">No projects match your search.</td></tr>
             </tbody>
         </table>
     </div>

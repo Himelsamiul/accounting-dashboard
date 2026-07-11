@@ -59,6 +59,9 @@
                 <button class="btn btn-primary" type="submit">Track</button>
             </form>
         </div>
+        <div style="margin-top:12px; font-size:0.9rem; color:var(--muted);">
+            Forgot your code? <a href="{{ route('portal.request-code') }}" style="color:var(--primary); font-weight:600;">Request it here →</a>
+        </div>
         @if($searched && !$project)
             <div class="notfound">No project found for code <strong>{{ $code }}</strong>. Please check the code and try again.</div>
         @endif
@@ -99,6 +102,8 @@
                     <div class="detail-list">
                         <div class="d"><div class="dt">Client</div><div class="dd">{{ $project->client->name ?? '—' }}</div></div>
                         <div class="d"><div class="dt">Type</div><div class="dd">{{ $project->type ?: '—' }}</div></div>
+                        <div class="d"><div class="dt">Start Date</div><div class="dd">{{ $project->start_date ? $project->start_date->format('d M Y') : '—' }}</div></div>
+                        <div class="d"><div class="dt">Estimated End Date</div><div class="dd">{{ $project->end_date ? $project->end_date->format('d M Y') : '—' }}</div></div>
                         <div class="d"><div class="dt">Invoices</div><div class="dd">{{ $project->invoices->count() }}</div></div>
                         <div class="d"><div class="dt">Registered</div><div class="dd">{{ $project->created_at ? $project->created_at->format('d M Y') : '—' }}</div></div>
                         <div class="d full"><div class="dt">Description</div><div class="dd">{{ $project->description ?: '—' }}</div></div>

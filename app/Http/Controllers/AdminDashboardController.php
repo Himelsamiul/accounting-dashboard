@@ -71,7 +71,29 @@ class AdminDashboardController extends Controller
             }
         }
 
-        return view('dashboard', compact('stats', 'months', 'statusBreakdown', 'projectStatus'));
+        // Team payout snapshot.
+        $teamStats = [
+            'members' => \App\Models\TeamMember::count(),
+            'active' => \App\Models\TeamMember::where('is_active', true)->count(),
+            'paid_out' => (float) \App\Models\TeamPayment::sum('amount'),
+        ];
+
+        // Recent invoices for the activity table.
+        $recentInvoices = Invoice::with(['client', 'project'])->latest()->take(6)->get();
+
+        // Top clients by total project value.
+        $topClients = Client::withSum('projects as total_value', 'project_value')
+            ->withCount('projects')
+            ->orderByDesc('total_value')
+            ->take(5)
+            ->get()
+            ->filter(fn ($c) => $c->total_value > 0)
+            ->values();
+
+        return view('dashboard', compact(
+            'stats', 'months', 'statusBreakdown', 'projectStatus',
+            'teamStats', 'recentInvoices', 'topClients'
+        ));
     }
 
     public function indexClients()
@@ -110,7 +132,7 @@ class AdminDashboardController extends Controller
     public function storeProject(Request $request)
     {
         $project = Project::create(array_merge(
-            $request->only(['client_id', 'name', 'type', 'project_value', 'description']),
+            $request->only(['client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'description']),
             ['code' => Project::generateCode()]
         ));
 
@@ -138,7 +160,7 @@ class AdminDashboardController extends Controller
 
     public function updateProject(Request $request, Project $project)
     {
-        $project->update($request->only(['client_id', 'name', 'type', 'project_value', 'description']));
+        $project->update($request->only(['client_id', 'name', 'type', 'project_value', 'start_date', 'end_date', 'description']));
         return redirect()->route('projects.index')->with('status', 'Project updated successfully.');
     }
 
