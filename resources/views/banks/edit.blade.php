@@ -18,7 +18,7 @@
             @csrf
             <div class="form-grid">
                 <div class="field">
-                    <label>Bank Name</label>
+                    <label>Bank Name <span class="req">*</span></label>
                     <input class="input" type="text" name="name" value="{{ old('name', $bank->name) }}" required>
                 </div>
                 <div class="field">
@@ -38,6 +38,7 @@
                 <button class="btn btn-primary" type="submit">Update Bank</button>
                 <a href="{{ route('banks.index') }}" class="btn btn-ghost">Cancel</a>
             </div>
+            <div class="form-legend"><span class="req">*</span> Required field</div>
         </form>
     </div>
 </div>

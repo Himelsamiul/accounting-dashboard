@@ -18,7 +18,7 @@
             @csrf
             <div class="form-grid">
                 <div class="field">
-                    <label>Project Name</label>
+                    <label>Project Name <span class="req">*</span></label>
                     <input class="input" type="text" name="name" value="{{ old('name') }}" placeholder="e.g. ERP Web Portal" required>
                 </div>
                 <div class="field">
@@ -26,7 +26,7 @@
                     <input class="input" type="text" name="type" value="{{ old('type') }}" placeholder="e.g. Software Project">
                 </div>
                 <div class="field">
-                    <label>Client</label>
+                    <label>Client <span class="req">*</span></label>
                     <select class="select" name="client_id" required>
                         <option value="">-- Select Client --</option>
                         @foreach($clients as $client)
@@ -35,7 +35,7 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label>Project Value (৳)</label>
+                    <label>Project Value (৳) <span class="req">*</span></label>
                     <input class="input" type="number" step="0.01" name="project_value" value="{{ old('project_value') }}" placeholder="200000" required>
                 </div>
                 <div class="field col-span">
@@ -47,6 +47,7 @@
                 <button class="btn btn-primary" type="submit">Save Project</button>
                 <a href="{{ route('projects.index') }}" class="btn btn-ghost">Cancel</a>
             </div>
+            <div class="form-legend"><span class="req">*</span> Required field</div>
         </form>
     </div>
 </div>

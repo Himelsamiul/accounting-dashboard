@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="form-grid">
                     <div class="field">
-                        <label>Project</label>
+                        <label>Project <span class="req">*</span></label>
                         <select class="select" name="project_id" id="projectSelect" required>
                             @foreach($projects as $project)
                                 <option value="{{ $project->id }}" data-remaining="{{ $project->remaining }}" {{ $invoice->project_id == $project->id ? 'selected' : '' }}>{{ $project->name }} — ৳{{ number_format($project->remaining, 0) }} due</option>
@@ -29,7 +29,7 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label>Client</label>
+                        <label>Client <span class="req">*</span></label>
                         <select class="select" name="client_id" required>
                             @foreach($clients as $client)
                                 <option value="{{ $client->id }}" {{ $invoice->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
@@ -37,7 +37,7 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label>Bank</label>
+                        <label>Bank <span class="req">*</span></label>
                         <select class="select" name="bank_id" required>
                             @foreach($banks as $bank)
                                 <option value="{{ $bank->id }}" {{ $invoice->bank_id == $bank->id ? 'selected' : '' }}>{{ $bank->name }}</option>
@@ -45,11 +45,11 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label>Invoice Number</label>
+                        <label>Invoice Number <span class="req">*</span></label>
                         <input class="input" type="text" name="invoice_number" value="{{ $invoice->invoice_number }}" required>
                     </div>
                     <div class="field">
-                        <label>Invoice Date</label>
+                        <label>Invoice Date <span class="req">*</span></label>
                         <input class="input" type="date" name="invoice_date" value="{{ $invoice->invoice_date }}" required>
                     </div>
                     <div class="field">
@@ -78,6 +78,7 @@
                     <button class="btn btn-primary" type="submit">Update Invoice</button>
                     <a href="{{ route('invoices.index') }}" class="btn btn-ghost">Cancel</a>
                 </div>
+                <div class="form-legend"><span class="req">*</span> Required field</div>
             </div>
         </div>
 

@@ -68,6 +68,7 @@
         .btn { border: none; border-radius: var(--radius-sm); padding: 13px 18px; background: var(--primary); color: #fff; font-family: inherit; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: background .15s; }
         .btn:hover { background: var(--primary-600); }
         .error { color: var(--danger); font-size: 0.85rem; }
+        .req { color: var(--danger); font-weight: 700; }
         .seed { margin-top: 20px; font-size: 0.82rem; color: var(--muted); padding: 12px 14px; background: var(--surface-3); border-radius: var(--radius-sm); }
         @media (max-width: 820px) { .card { grid-template-columns: 1fr; } .hero { order: 2; } }
         @media (max-width: 480px) { .hero, .form-panel { padding: 28px; } }
@@ -105,7 +106,7 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="field">
-                    <label>Email address</label>
+                    <label>Email address <span class="req">*</span></label>
                     <div class="input-wrap">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                         <input type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" required autocomplete="email">
@@ -113,7 +114,7 @@
                     @error('email')<div class="error">{{ $message }}</div>@enderror
                 </div>
                 <div class="field">
-                    <label>Password</label>
+                    <label>Password <span class="req">*</span></label>
                     <div class="input-wrap">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                         <input type="password" name="password" placeholder="••••••••" required autocomplete="current-password">

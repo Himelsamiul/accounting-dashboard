@@ -29,7 +29,7 @@
                 @else
                     <div class="form-grid">
                         <div class="field">
-                            <label>Project</label>
+                            <label>Project <span class="req">*</span></label>
                             <select class="select" name="project_id" id="projectSelect" required>
                                 <option value="">-- Select Project --</option>
                                 @foreach($openProjects as $project)
@@ -39,7 +39,7 @@
                             <span class="hint">Only projects with an outstanding balance are shown.</span>
                         </div>
                         <div class="field">
-                            <label>Client</label>
+                            <label>Client <span class="req">*</span></label>
                             <select class="select" name="client_id" id="clientSelect" required>
                                 @foreach($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -47,7 +47,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label>Bank</label>
+                            <label>Bank <span class="req">*</span></label>
                             <select class="select" name="bank_id" required>
                                 @foreach($banks as $bank)
                                     <option value="{{ $bank->id }}">{{ $bank->name }}</option>
@@ -55,7 +55,7 @@
                             </select>
                         </div>
                         <div class="field">
-                            <label>Invoice Date</label>
+                            <label>Invoice Date <span class="req">*</span></label>
                             <input class="input" type="date" name="invoice_date" value="{{ date('Y-m-d') }}" required>
                         </div>
                         <div class="field">
@@ -84,6 +84,7 @@
                         <button class="btn btn-primary" type="submit">Create Invoice</button>
                         <a href="{{ route('invoices.index') }}" class="btn btn-ghost">Cancel</a>
                     </div>
+                    <div class="form-legend"><span class="req">*</span> Required field</div>
                 @endif
             </div>
         </div>

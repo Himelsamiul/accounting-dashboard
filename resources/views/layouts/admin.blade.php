@@ -219,6 +219,12 @@
         .field.col-span { grid-column: 1 / -1; }
         .field label { font-size: 0.83rem; font-weight: 600; color: var(--text-soft); }
         .field .hint { font-size: 0.76rem; color: var(--muted); }
+        .req { color: var(--danger); font-weight: 700; margin-left: 1px; }
+        .form-legend { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+        .form-legend .req { margin-right: 3px; }
+        .phone-field { display: flex; gap: 8px; }
+        .phone-field .phone-code { width: 128px; flex-shrink: 0; padding-right: 28px; }
+        .phone-field .phone-number { flex: 1; }
         .input, .select, .textarea {
             width: 100%; padding: 10px 13px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong);
             background: var(--surface); color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none;

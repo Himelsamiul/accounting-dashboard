@@ -18,7 +18,7 @@
             @csrf
             <div class="form-grid">
                 <div class="field">
-                    <label>Client Name</label>
+                    <label>Client Name <span class="req">*</span></label>
                     <input class="input" type="text" name="name" value="{{ old('name') }}" placeholder="e.g. GreenTech Ltd." required>
                 </div>
                 <div class="field">
@@ -26,12 +26,12 @@
                     <input class="input" type="text" name="company" value="{{ old('company') }}" placeholder="e.g. Prime Byte Soft">
                 </div>
                 <div class="field">
-                    <label>Email</label>
+                    <label>Email <span class="req">*</span></label>
                     <input class="input" type="email" name="email" value="{{ old('email') }}" placeholder="client@example.com" required>
                 </div>
                 <div class="field">
-                    <label>Phone</label>
-                    <input class="input" type="text" name="phone" value="{{ old('phone') }}" placeholder="+8801XXXXXXXXX">
+                    <label>Phone <span class="req">*</span></label>
+                    @include('partials.phone-input', ['value' => old('phone')])
                 </div>
                 <div class="field col-span">
                     <label>Address</label>
@@ -42,6 +42,7 @@
                 <button class="btn btn-primary" type="submit">Save Client</button>
                 <a href="{{ route('clients.index') }}" class="btn btn-ghost">Cancel</a>
             </div>
+            <div class="form-legend"><span class="req">*</span> Required field</div>
         </form>
     </div>
 </div>
