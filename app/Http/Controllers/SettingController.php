@@ -76,6 +76,36 @@ class SettingController extends Controller
 
         $user->update(['password' => Hash::make($request->input('password'))]);
 
-        return back()->with('status', 'Password changed successfully.');
+        // Log out every OTHER device/session for this account, keeping the current one.
+        $others = $this->logoutOtherSessions($user->id, $request->session()->getId());
+
+        \App\Support\ActivityLogger::log('updated', $user, 'Changed password' . ($others > 0 ? " · signed out {$others} other device(s)" : ''));
+
+        $message = 'Password changed successfully.';
+        if ($others > 0) {
+            $message .= ' You have been signed out of ' . $others . ' other device' . ($others === 1 ? '' : 's') . '.';
+        }
+
+        return back()->with('status', $message);
+    }
+
+    /**
+     * Remove all database sessions for a user except the current one.
+     * Other devices are logged out on their next request. Returns how many were removed.
+     */
+    protected function logoutOtherSessions(int $userId, string $currentSessionId): int
+    {
+        if (config('session.driver') !== 'database') {
+            return 0;
+        }
+
+        try {
+            return \Illuminate\Support\Facades\DB::table('sessions')
+                ->where('user_id', $userId)
+                ->where('id', '!=', $currentSessionId)
+                ->delete();
+        } catch (\Throwable $e) {
+            return 0;
+        }
     }
 }
