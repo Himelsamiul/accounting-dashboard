@@ -11,7 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'perm' => \App\Http\Middleware\EnsurePermission::class,
+            'customer.active' => \App\Http\Middleware\EnsureCustomerActive::class,
+        ]);
+
+        // Portal (customer) guests go to the client login; everyone else to the admin login.
+        $middleware->redirectGuestsTo(function (\Illuminate\Http\Request $request) {
+            return $request->is('portal/*') ? route('customer.login') : route('login');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -22,6 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
+        'designation',
+        'is_super_admin',
     ];
 
     /**
@@ -44,6 +47,56 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_super_admin' => 'boolean',
         ];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return (bool) $this->is_super_admin;
+    }
+
+    /** Whether this user may perform an action on a module. */
+    public function hasPermission(string $module, string $action = 'view'): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        $permissions = $this->role?->permissions ?? [];
+
+        return in_array($action, $permissions[$module] ?? [], true);
+    }
+
+    public function canView(string $module): bool
+    {
+        return $this->hasPermission($module, 'view');
+    }
+
+    /** First section this user is allowed to see after login (null if none). */
+    public function landingRoute(): ?string
+    {
+        $map = [
+            'dashboard' => 'dashboard',
+            'clients' => 'clients.index',
+            'projects' => 'projects.index',
+            'banks' => 'banks.index',
+            'invoices' => 'invoices.index',
+            'fully_paid' => 'fully-paid.index',
+            'users' => 'users.index',
+        ];
+
+        foreach ($map as $module => $routeName) {
+            if ($this->canView($module)) {
+                return route($routeName);
+            }
+        }
+
+        return null;
     }
 }

@@ -29,6 +29,7 @@
     <div class="card-body">
         <div class="detail-list">
             <div class="detail-row"><div class="dt">Project Name</div><div class="dd">{{ $project->name }}</div></div>
+            <div class="detail-row"><div class="dt">Tracking Code</div><div class="dd"><span class="badge badge-primary" style="letter-spacing:1px;">{{ $project->code ?? '—' }}</span></div></div>
             <div class="detail-row"><div class="dt">Client</div><div class="dd">{{ $project->client->name ?? '—' }}</div></div>
             <div class="detail-row"><div class="dt">Type</div><div class="dd">{{ $project->type ?: '—' }}</div></div>
             <div class="detail-row"><div class="dt">Project Value</div><div class="dd">৳{{ number_format($value, 2) }}</div></div>

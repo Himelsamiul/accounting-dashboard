@@ -22,7 +22,19 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard'));
+            $landing = $request->user()->landingRoute();
+
+            if (! $landing) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => 'Your account has no access assigned yet. Please contact an administrator.',
+                ]);
+            }
+
+            return redirect()->intended($landing);
         }
 
         return back()->withErrors([

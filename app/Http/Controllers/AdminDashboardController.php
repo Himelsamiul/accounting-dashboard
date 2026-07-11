@@ -109,8 +109,25 @@ class AdminDashboardController extends Controller
 
     public function storeProject(Request $request)
     {
-        Project::create($request->only(['client_id', 'name', 'type', 'project_value', 'description']));
-        return redirect()->route('projects.index')->with('status', 'Project created successfully.');
+        $project = Project::create(array_merge(
+            $request->only(['client_id', 'name', 'type', 'project_value', 'description']),
+            ['code' => Project::generateCode()]
+        ));
+
+        // Email the tracking code to the client; don't fail creation if mail is down.
+        $message = 'Project created successfully. Tracking code: ' . $project->code;
+        $project->load('client');
+        if ($project->client && $project->client->email) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($project->client->email)
+                    ->send(new \App\Mail\ProjectCodeMail($project));
+                $message .= ' — emailed to ' . $project->client->email;
+            } catch (\Throwable $e) {
+                $message .= ' (email could not be sent: ' . $e->getMessage() . ')';
+            }
+        }
+
+        return redirect()->route('projects.index')->with('status', $message);
     }
 
     public function editProject(Project $project)
