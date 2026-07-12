@@ -26,6 +26,7 @@ class Role extends Model
             'projects' => 'Projects',
             'team' => 'Team & Projects',
             'banks' => 'Banks',
+            'expenses' => 'Expenses',
             'invoices' => 'Invoices',
             'fully_paid' => 'Fully Paid',
             'customers' => 'Portal Customers',

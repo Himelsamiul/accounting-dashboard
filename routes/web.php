@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerPasswordController;
 use App\Http\Controllers\CodeRequestController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PasswordResetController;
@@ -123,6 +124,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/banks/{bank}/edit', [AdminDashboardController::class, 'editBank'])->middleware('perm:banks,edit')->name('banks.edit');
     Route::post('/banks/{bank}/edit', [AdminDashboardController::class, 'updateBank'])->middleware('perm:banks,edit');
     Route::post('/banks/{bank}/delete', [AdminDashboardController::class, 'deleteBank'])->middleware('perm:banks,delete')->name('banks.delete');
+
+    // Expenses
+    // Expense heads
+    Route::get('/expense-heads', [ExpenseController::class, 'headsIndex'])->middleware('perm:expenses,view')->name('expense-heads.index');
+    Route::get('/expense-heads/create', [ExpenseController::class, 'headCreate'])->middleware('perm:expenses,create')->name('expense-heads.create');
+    Route::post('/expense-heads/create', [ExpenseController::class, 'headStore'])->middleware('perm:expenses,create');
+    Route::get('/expense-heads/{head}/edit', [ExpenseController::class, 'headEdit'])->middleware('perm:expenses,edit')->name('expense-heads.edit');
+    Route::post('/expense-heads/{head}/edit', [ExpenseController::class, 'headUpdate'])->middleware('perm:expenses,edit');
+    Route::post('/expense-heads/{head}/delete', [ExpenseController::class, 'headDelete'])->middleware('perm:expenses,delete')->name('expense-heads.delete');
+    // Expense entries
+    Route::get('/expenses', [ExpenseController::class, 'index'])->middleware('perm:expenses,view')->name('expenses.index');
+    // Report (filterable + PDF/Excel export) — literal segments before {expense}
+    Route::get('/expenses/report', [ExpenseController::class, 'report'])->middleware('perm:expenses,view')->name('expenses.report');
+    Route::get('/expenses/report/pdf', [ExpenseController::class, 'reportPdf'])->middleware('perm:expenses,view')->name('expenses.report.pdf');
+    Route::get('/expenses/report/excel', [ExpenseController::class, 'reportExcel'])->middleware('perm:expenses,view')->name('expenses.report.excel');
+    Route::get('/expenses/create', [ExpenseController::class, 'create'])->middleware('perm:expenses,create')->name('expenses.create');
+    Route::post('/expenses/create', [ExpenseController::class, 'store'])->middleware('perm:expenses,create');
+    Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->middleware('perm:expenses,edit')->name('expenses.edit');
+    Route::post('/expenses/{expense}/edit', [ExpenseController::class, 'update'])->middleware('perm:expenses,edit');
+    Route::post('/expenses/{expense}/delete', [ExpenseController::class, 'delete'])->middleware('perm:expenses,delete')->name('expenses.delete');
 
     // Invoices
     Route::get('/invoices/create', [AdminDashboardController::class, 'createInvoice'])->middleware('perm:invoices,create')->name('invoices.create');

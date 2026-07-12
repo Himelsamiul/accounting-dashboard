@@ -472,7 +472,7 @@
                     Dashboard
                 </a>
             @endif
-            @if($u->canView('clients') || $u->canView('projects') || $u->canView('team') || $u->canView('banks') || $u->canView('invoices') || $u->canView('fully_paid'))
+            @if($u->canView('clients') || $u->canView('projects') || $u->canView('team') || $u->canView('banks') || $u->canView('expenses') || $u->canView('invoices') || $u->canView('fully_paid'))
                 <div class="nav-label">Management</div>
             @endif
             @if($u->canView('clients'))
@@ -497,6 +497,12 @@
                 <a href="{{ route('banks.index') }}" class="{{ request()->routeIs('banks.*') ? 'active' : '' }}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
                     Banks
+                </a>
+            @endif
+            @if($u->canView('expenses'))
+                <a href="{{ route('expenses.index') }}" class="{{ request()->routeIs('expenses.*') || request()->routeIs('expense-heads.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    Expenses
                 </a>
             @endif
             @if($u->canView('invoices'))
